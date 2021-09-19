@@ -1,5 +1,6 @@
 
 import 'package:equatable/equatable.dart';
+import 'package:liveweather/model/weather_model.dart';
 
 class WeatherState extends Equatable {
   // final String? city;
@@ -11,7 +12,6 @@ class WeatherState extends Equatable {
 }
 
 class WeatherIsNotSearched extends WeatherState {
-  
 }
 
 
@@ -22,7 +22,7 @@ class WeatherIsLoading extends WeatherState {
 class WeatherIsLoaded extends WeatherState {
   final _weather;
   WeatherIsLoaded(this._weather);
-
+  WeatherModel  get getWeather =>_weather;
   @override 
   List<Object> get props => [_weather];
 }

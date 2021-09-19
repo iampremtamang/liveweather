@@ -7,12 +7,12 @@ import 'package:liveweather/repository/weather_repo.dart';
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   
   WeatherRepo  weatherRepo;
-  WeatherBloc(this.weatherRepo) : super(WeatherIsNotSearched);
-
+  WeatherBloc(this.weatherRepo):super(WeatherIsNotSearched());
+  
   @override
+  // ignore: override_on_non_overriding_member
   WeatherState  get initialState => WeatherIsNotSearched();
 
-  get event => null;
 
   @override
   Stream<WeatherState> mapEventToState(WeatherEvent event) async* {
@@ -22,12 +22,14 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
 
       try {
         // ignore: unused_local_variable
-        WeatherModel weather = await weatherRepo.getWeather(event._city);
+        WeatherModel? weather = await weatherRepo.getWeather(event.city);
         yield WeatherIsLoaded(weather);
         
       } catch(_) {
         yield WeatherIsNotSearched();
       }
+    }else if(event is ResetWeather) {
+      yield WeatherIsNotSearched();
     }
   }
 }
